@@ -13,6 +13,12 @@ It's the clasic game but u can play with other players!
 
 ![image description](Images/Playing.gif)
 
+## Match
+
+Try to win!! u need to get more Score than ur opponent;
+
+![image description](Images/EndMatch.gif)
+
 ## How To test
 
 - Go to PLAYHERE folder
