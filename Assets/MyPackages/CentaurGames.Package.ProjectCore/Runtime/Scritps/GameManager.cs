@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace CentaurGames.Packages.Games.Core
 {
+    [RequireComponent(typeof(SceneBuilder))]
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance;
