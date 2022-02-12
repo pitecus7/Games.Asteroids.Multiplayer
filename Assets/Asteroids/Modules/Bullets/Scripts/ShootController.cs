@@ -6,7 +6,7 @@ using UnityEngine;
 public class ShootController : NetworkBehaviour 
 {
     private Player player;
-
+        
     private void Awake()
     {
         player = GetComponent<Player>();
@@ -21,6 +21,7 @@ public class ShootController : NetworkBehaviour
             Shoot();
         }
     }
+
     [Command]
     private void Shoot()
     {

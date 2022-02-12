@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSpaceship : SpaceshipEntity
 {
-    public IFlyAble spaceshipMovement;
+    [SerializeField, SerializeReference]
+    private IFlyAble spaceshipMovement;
+    [SerializeField, SerializeReference]
+    private IShootAble spaceshipShoot;
 
     private void Awake()
     {
@@ -12,10 +13,14 @@ public class PlayerSpaceship : SpaceshipEntity
         {
             spaceshipMovement = GetComponentInChildren<IFlyAble>();
         }
+        if (spaceshipShoot == null)
+        {
+            spaceshipShoot = GetComponentInChildren<IShootAble>();
+        }
     }
     public override void Init()
     {
-        throw new System.NotImplementedException();
+        throw new System.NotImplementedException(); 
     }
 
     private void FixedUpdate()
@@ -25,5 +30,6 @@ public class PlayerSpaceship : SpaceshipEntity
             return;
         }
         spaceshipMovement?.UpdateBehaviour(Time.deltaTime);
+        spaceshipShoot?.UpdateBehaviour(Time.deltaTime);
     }
 }

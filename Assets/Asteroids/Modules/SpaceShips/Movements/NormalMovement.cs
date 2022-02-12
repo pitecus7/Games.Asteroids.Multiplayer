@@ -1,14 +1,15 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalMovement : MonoBehaviour, IFlyAble
+public class NormalMovement : NetworkBehaviour, IFlyAble
 {
     [SerializeField] private SpaceshipActor spaceshipActor;
     [SerializeField] private float speed = 1.0f;
     [SerializeField] private float speedRotation = 5.0f;
 
-    [SerializeField] private IControlable controlChannel;
+    [SerializeField] private InputsReader inputsReader;
 
     private void Awake()
     {
@@ -17,28 +18,28 @@ public class NormalMovement : MonoBehaviour, IFlyAble
             spaceshipActor = GetComponentInParent<SpaceshipActor>();
         }
 
-        if (controlChannel == null)
+        if (inputsReader == null)
         {
-            controlChannel = Resources.Load<ControlChannel>("Common/ControlChannel");
-        }
+            inputsReader = Resources.Load<InputsReader>("Common/ControlChannel");
+        }        
     }
 
     public void UpdateBehaviour(float dt)
     {
-        if (spaceshipActor == null || controlChannel == null)
+        if (spaceshipActor == null || inputsReader == null)
         {
             Debug.LogWarning("Something wrong... Components not found.");
             return;
         }
 
-        if (controlChannel.IsThrusting())
+        if (inputsReader.IsThrusting())
         {
             spaceshipActor.RigidBody.AddForce(transform.up * speed);
         }
 
-        if (controlChannel.GetTurnDirection() != 0)
+        if (inputsReader.GetTurnDirection() != 0)
         {
-            spaceshipActor.RigidBody.AddTorque(controlChannel.GetTurnDirection() * speedRotation);
+            spaceshipActor.RigidBody.AddTorque(inputsReader.GetTurnDirection() * speedRotation);
         }
     }
 }

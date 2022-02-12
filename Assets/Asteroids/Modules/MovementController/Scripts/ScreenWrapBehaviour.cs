@@ -16,12 +16,12 @@ public class ScreenWrapBehaviour : NetworkBehaviour
         renderers = GetComponentsInChildren<Renderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         ScreenWrap();
     }
 
+    [Server]
     void ScreenWrap()
     {
         // If all parts of the object are invisible we wrap it around
@@ -64,6 +64,12 @@ public class ScreenWrapBehaviour : NetworkBehaviour
         }
 
         //Apply new position
+        Teleport(newPosition);
+    }
+
+    [ClientRpc]
+    private void Teleport(Vector3 newPosition)
+    {
         transform.position = newPosition;
     }
 }

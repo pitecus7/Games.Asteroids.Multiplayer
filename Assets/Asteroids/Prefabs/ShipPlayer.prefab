@@ -1,5 +1,76 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &780632514086277685
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5425931633805374809}
+  - component: {fileID: 6288833591706806277}
+  - component: {fileID: 1947301409032406720}
+  m_Layer: 7
+  m_Name: Components
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5425931633805374809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780632514086277685}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5070911524847080818}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6288833591706806277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780632514086277685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6c61fa8d5dd0a4f93a99a7b2e34b2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  score: 0
+  OnScoreChange:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1947301409032406720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780632514086277685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089898d0d41cf2e47ab39be94e1f38d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  OnPlayerDead:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLivesChange:
+    m_PersistentCalls:
+      m_Calls: []
+  lives: 3
 --- !u!1 &4002285319690983139
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,11 +279,10 @@ GameObject:
   - component: {fileID: 6975537618981077938}
   - component: {fileID: 9124503141791657279}
   - component: {fileID: 5070911524847080816}
-  - component: {fileID: 1057902625489537417}
+  - component: {fileID: 3277644960564186424}
   - component: {fileID: 3247703148285753792}
   - component: {fileID: 5070911524847080828}
   - component: {fileID: 5070911524847080829}
-  - component: {fileID: 3277644960564186424}
   m_Layer: 7
   m_Name: ShipPlayer
   m_TagString: Player
@@ -233,6 +303,7 @@ Transform:
   m_Children:
   - {fileID: 6849311534718610547}
   - {fileID: 3761206447877616959}
+  - {fileID: 5425931633805374809}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -250,6 +321,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  spaceshipMovement:
+    id: 0
+  spaceshipShoot:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!114 &6975537618981077938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,20 +400,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1057902625489537417
-MonoBehaviour:
+--- !u!68 &3277644960564186424
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5070911524847080823}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e18f0574524c644da7da67f54c1e98f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.0054852143, y: -0.34978372}
+  - {x: -0.4713547, y: -0.27147955}
+  - {x: 0.00069642067, y: 0.30782348}
+  - {x: 0.4636938, y: -0.26741824}
+  - {x: 0.040765464, y: -0.35206863}
+  - {x: -0.0084076, y: -0.34918922}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!114 &3247703148285753792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,31 +492,6 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!68 &3277644960564186424
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070911524847080823}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: 0.0024517477, y: -0.14937544}
-  - {x: -0.29475725, y: -0.28933772}
-  - {x: 0.00069642067, y: 0.30782348}
-  - {x: 0.30029103, y: -0.29976013}
-  - {x: -0.002454877, y: -0.15076515}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!1 &8836252093595428836
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,6 +502,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3761206447877616959}
   - component: {fileID: 9130564712642607940}
+  - component: {fileID: 9045093459324572820}
   m_Layer: 7
   m_Name: Behaviours
   m_TagString: Untagged
@@ -469,6 +536,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79330fd2c0d9dc148ba26f5aa8916278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spaceshipActor: {fileID: 0}
+  syncMode: 0
+  syncInterval: 0.1
+  spaceshipActor: {fileID: 6975537618981077938}
   speed: 1
   speedRotation: 5
+  inputsReader: {fileID: 11400000, guid: 422780db0f61b704c9f1961c372721a8, type: 2}
+--- !u!114 &9045093459324572820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8836252093595428836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f598292e6aac1374b96c871b5495d98f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  inputsReader: {fileID: 11400000, guid: 422780db0f61b704c9f1961c372721a8, type: 2}

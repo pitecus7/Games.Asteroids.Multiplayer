@@ -33,18 +33,18 @@ public class AsteroidSpawner : NetworkBehaviour
 
     public void Init()
     {
-        InvokeRepeating(nameof(MoreDificulty), timeToAddDificulty, timeToAddDificulty);
+      /*  InvokeRepeating(nameof(MoreDificulty), timeToAddDificulty, timeToAddDificulty);
         if (isServer)
         {
             MoreDificulty();
-        }
+        }*/
     }
 
     public void MoreDificulty()
     {
-        difficulty++;
+      /*  difficulty++;
         CancelInvoke(nameof(Spawn));
-        InvokeRepeating(nameof(Spawn), spawnRate / difficulty, spawnRate / difficulty);
+        InvokeRepeating(nameof(Spawn), spawnRate / difficulty, spawnRate / difficulty);*/
     }
 
     public void Spawn()

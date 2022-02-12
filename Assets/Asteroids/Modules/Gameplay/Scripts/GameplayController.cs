@@ -51,7 +51,7 @@ public class GameplayController : GameplayControllerCore<GameplayController>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && firstButtonPressed)
+       /* if (Input.GetKeyDown(KeyCode.Escape) && firstButtonPressed)
         {
             if (Time.time - timeOfFirstButton < 0.5f)
             {
@@ -71,7 +71,7 @@ public class GameplayController : GameplayControllerCore<GameplayController>
         {
             firstButtonPressed = false;
             reset = false;
-        }
+        }*/
     }
 
     public void BackToLobby()
@@ -129,8 +129,10 @@ public class GameplayController : GameplayControllerCore<GameplayController>
         players.ForEach(player => player.PlayerStart());
     }
 
-    private void OnPlayerCrash(Player player)
+    private void OnPlayerCrash(GameObject playerGO)
     {
+        Player player = playerGO.GetComponent<Player>();
+
         explosionEffect.transform.position = player.transform.position;
         explosionEffect.Play();
 

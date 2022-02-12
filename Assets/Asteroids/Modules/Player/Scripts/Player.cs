@@ -1,15 +1,5 @@
 using Mirror;
 using UnityEngine;
-using UnityEngine.Events;
-
-[System.Serializable]
-public class PlayerEvent : UnityEvent<Player>{}
-
-[System.Serializable]
-public class IntEvent : UnityEvent<int>{}
-
-[System.Serializable]
-public class StringEvent : UnityEvent<string>{}
 
 public class Player : NetworkBehaviour
 {
@@ -89,6 +79,7 @@ public class Player : NetworkBehaviour
     public void AddScore(int scoreToAdd)
     {
         score += scoreToAdd;
+        GetComponentInChildren<PlayerScore>().AddScore(scoreToAdd);
     }
     [Server]
     public void RemoveScore(int scoreToRemove)
@@ -97,6 +88,7 @@ public class Player : NetworkBehaviour
             score -= scoreToRemove;
         else
             score = 0;
+        GetComponentInChildren<PlayerScore>().RemoveScore(scoreToRemove);
     }
     [Server]
     public void AddLive(int liveToAdd)
@@ -117,7 +109,7 @@ public class Player : NetworkBehaviour
 
         if (lives == 0)
         {
-            OnPlayerDead?.Invoke(this);
+            OnPlayerDead?.Invoke(this.gameObject);
         }
     }
 
@@ -146,7 +138,7 @@ public class Player : NetworkBehaviour
         if (collision.gameObject.CompareTag("Asteroid"))
         {
             ShowExplosive();
-            OnPlayerCrash?.Invoke(this);
+            OnPlayerCrash?.Invoke(this.gameObject);
         }
     }
 

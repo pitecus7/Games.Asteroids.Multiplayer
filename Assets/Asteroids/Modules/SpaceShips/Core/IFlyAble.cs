@@ -1,4 +1,4 @@
-public interface IFlyAble
+public interface IFlyAble : IUpdateable
 {
-    void UpdateBehaviour(float dt);
+
 }
