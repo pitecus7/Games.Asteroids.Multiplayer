@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Welcome to Asteroid Multiplayer
 
 You can use the [editor on GitHub](https://github.com/pitecus7/Games.Asteroids.Multiplayer/edit/gh-pages/docs/index.md) to maintain and preview the content for your website in Markdown files.
 
