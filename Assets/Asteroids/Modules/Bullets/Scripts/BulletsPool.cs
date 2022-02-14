@@ -7,20 +7,20 @@ public class BulletsPool : MonoBehaviour
 {
     public static BulletsPool Instance;
 
-    [SerializeField] Bullet bulletPrefab;
+    [SerializeField] ClasicBullet bulletPrefab;
 
-    Queue<Bullet> bulletsPool = new Queue<Bullet>();
+    Queue<ClasicBullet> bulletsPool = new Queue<ClasicBullet>();
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public Bullet GetPooledObject(Vector2 position, Quaternion rotation)
+    public ClasicBullet GetPooledObject(Vector2 position, Quaternion rotation)
     {
         if (bulletsPool.Count > 0)
         {
-            Bullet bullet = bulletsPool.Dequeue();
+            ClasicBullet bullet = bulletsPool.Dequeue();
             bullet.ShowToClients(position, rotation);
             bullet.gameObject.transform.position = position;
             bullet.gameObject.transform.rotation = rotation;
@@ -29,13 +29,13 @@ public class BulletsPool : MonoBehaviour
         }
         else
         {
-            Bullet asteroid = Instantiate(bulletPrefab, position, rotation);
+            ClasicBullet asteroid = Instantiate(bulletPrefab, position, rotation);
             NetworkServer.Spawn(asteroid.gameObject);
             return asteroid;
         }
     }
 
-    public void AddToPool(Bullet bullet)
+    public void AddToPool(ClasicBullet bullet)
     {
         bullet.HideToClients();
         bullet.gameObject.SetActive(false);

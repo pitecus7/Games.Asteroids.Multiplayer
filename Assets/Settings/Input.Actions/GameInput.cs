@@ -40,7 +40,7 @@ public class @GameInput : IInputActionCollection, IDisposable
                     ""id"": ""cd57a7ff-6f08-4265-a833-f2e724a7be0b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [

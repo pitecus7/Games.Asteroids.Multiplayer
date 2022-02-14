@@ -9,7 +9,6 @@ public class LobbySceneController : SceneController
     public LobbyController lobbyController;
     public override void Init(object data, Action<bool, uint, string> callback = null)
     {
-        Debug.Log("Menu Started.");
-        Debug.Log(data.ToString());
+        callback?.Invoke(true, 200, "Ok.");
     }
 }

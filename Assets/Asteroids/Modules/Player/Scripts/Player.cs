@@ -10,8 +10,8 @@ public class Player : NetworkBehaviour
     public IntEvent OnLivesChange;
     public IntEvent OnScoreChange;
     public StringEvent OnNicknameChange;
-    public PlayerEvent OnPlayerDead;
-    public PlayerEvent OnPlayerCrash;
+    public ObjectEvent OnPlayerDead;
+    public ObjectEvent OnPlayerCrash;
 
 
     [SerializeField] private PlayerNickname playerNickname;
@@ -31,7 +31,7 @@ public class Player : NetworkBehaviour
 
     private void Start()
     {
-        playersChannel.AddPlayer(this);
+        // playersChannel.AddPlayer(this);
     }
 
     public override void OnStartClient()
@@ -56,8 +56,8 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     public void FinishMatch(string winnerNickname, string score)
     {
-        Player player = GameplayController.Instance.Players.Find(playerEa => playerEa.Nickname == winnerNickname);
-        GameplayController.Instance.GameOverPanel.ShowPanel(winnerNickname, score, player.isLocalPlayer);
+        //Player player = GameplayController.Instance.Players.Find(playerEa => playerEa.Nickname == winnerNickname);
+        // GameplayController.Instance.GameOverPanel.ShowPanel(winnerNickname, score, player.isLocalPlayer);
     }
 
     private void ScoreChanged(int oldValue, int newValue)
@@ -128,8 +128,7 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     public void ShowExplosive()
     {
-        GameplayController.Instance.ExplosionEffect.transform.position = transform.position;
-        GameplayController.Instance.ExplosionEffect.Play();
+        VfxController.Instance?.Explote(transform.position);
     }
 
     [Server]

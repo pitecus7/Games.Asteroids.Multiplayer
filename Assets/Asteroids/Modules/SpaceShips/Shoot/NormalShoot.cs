@@ -5,27 +5,28 @@ public class NormalShoot : NetworkBehaviour, IShootAble
 {
     [SerializeField] private InputsReader inputsReader;
 
-    private BulletsPool bulletsPool;
+    [SerializeField] private float fireCooldown = 1;
 
-    private Player player;
+    private float currentTimeShoot;
+
+    private GenericFactory factory;
 
     private void Awake()
     {
-        bulletsPool = BulletsPool.Instance;
-
-        player = GetComponentInParent<Player>();
+        factory = GenericFactory.Instance;
 
         if (inputsReader == null)
         {
             inputsReader = Resources.Load<InputsReader>("Common/ControlChannel");
-        }        
+        }
     }
 
     [Command]
-    private void Shoot()
+    private void Shoot(Vector2 position)
     {
-        Bullet bullet = bulletsPool.GetPooledObject(transform.position, transform.rotation);
-        bullet.Project(transform.up, player);
+        ClasicBullet bullet = factory.Create<ClasicBullet>("ClasicBullet");
+
+        bullet.Init(transform.up, transform.parent.gameObject, position);
     }
 
     public void UpdateBehaviour(float dt)
@@ -35,9 +36,11 @@ public class NormalShoot : NetworkBehaviour, IShootAble
             Debug.LogWarning("Something wrong... Components not found.");
             return;
         }
-        if (inputsReader.IsShooting())
+        if (inputsReader.IsShooting() && currentTimeShoot >= fireCooldown)
         {
-            Shoot();
+            Shoot(transform.parent.transform.position);
+            currentTimeShoot = 0;
         }
+        currentTimeShoot += dt;
     }
 }

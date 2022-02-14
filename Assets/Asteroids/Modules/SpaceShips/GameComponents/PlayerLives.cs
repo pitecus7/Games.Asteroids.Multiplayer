@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerLives : NetworkBehaviour
 {
-    public PlayerEvent OnPlayerDead;
     public IntEvent OnLivesChange;
     public int Lives { get => lives; }
 
@@ -28,13 +27,9 @@ public class PlayerLives : NetworkBehaviour
         {
             lives -= liveToRemove;
         }
-        else        {
-            lives = 0;
-        }
-
-        if (lives == 0)
+        else
         {
-            OnPlayerDead?.Invoke(this.gameObject);
+            lives = 0;
         }
     }
 }

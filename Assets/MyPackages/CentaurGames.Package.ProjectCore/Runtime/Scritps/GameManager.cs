@@ -114,7 +114,7 @@ namespace CentaurGames.Packages.Games.Core
             {
                 Debug.LogWarning("Loading scene can't be load, Configured it before to start");
                 //TODO: 
-                callback?.Invoke(false);
+                callback?.Invoke(true);
             }
         }
 
@@ -127,7 +127,7 @@ namespace CentaurGames.Packages.Games.Core
             else
             {
                 Debug.LogError($"Scene {sceneName} can't be load, Validate if not added in Build settings");
-                callback?.Invoke(false);
+                callback?.Invoke(true);
             }
         }
 
@@ -138,12 +138,11 @@ namespace CentaurGames.Packages.Games.Core
                 SceneManager.UnloadSceneAsync(sceneName).completed += (asyncOperation) => callback?.Invoke(true);
             }
             else
-            {
-                Debug.LogError($"Scene {sceneName} can't be unload");
-                callback?.Invoke(false);
+            {                
+                callback?.Invoke(true);
                 if (scenesFlowConfig != null && !scenesFlowConfig.testMode)
                 {
-                    Debug.Log("Process error");
+                   
                 }
             }
         }

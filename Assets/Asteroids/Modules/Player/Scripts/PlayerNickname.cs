@@ -1,12 +1,17 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerNickname : MonoBehaviour
+public class PlayerNickname : NetworkBehaviour
 {
+    [SerializeField] private SettingsChannel settinsChannel;
+
     [SerializeField] private TextMesh nicknameTextMesh;
 
     [SerializeField] private bool hideText;
+
+    [SyncVar(hook = nameof(NicknameChanged)), SerializeField] private string nickname;
 
     private float alphaCurrentValue;
 
@@ -18,6 +23,19 @@ public class PlayerNickname : MonoBehaviour
     [SerializeField, Range(-10.0f, 10.0f)]
     private float offset = -1f; //Y offset from following(Parent)
 
+    private void NicknameChanged(string oldValue, string newValue)
+    {
+        ShowNickname(newValue);
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        if (isLocalPlayer)
+            CMDInitValues(settinsChannel.nicknamePlayer);
+    }
+
     private void Start()
     {
         nicknameTextMesh = GetComponent<TextMesh>();
@@ -25,6 +43,12 @@ public class PlayerNickname : MonoBehaviour
         //Remove from parent, it want to be free!
         following = transform.parent;
         transform.SetParent(null, true);
+    }
+
+    [Command]
+    public void CMDInitValues(string _nickname)
+    {
+        nickname = _nickname;
     }
 
     void Update()
@@ -43,7 +67,7 @@ public class PlayerNickname : MonoBehaviour
     }
 
     void LateUpdate()
-    {        
+    {
         transform.position = Vector3.MoveTowards(transform.position, new Vector3(following.transform.position.x, offset + following.transform.position.y, following.transform.position.z), interested);
     }
 

@@ -86,7 +86,7 @@ public class Asteroid : NetworkBehaviour
         }
         else
         {
-            AsteroidSpawner.Instance.AddToPool(this);
+            //AsteroidSpawner.Instance.AddToPool(this);
         }
     }
 
@@ -102,7 +102,7 @@ public class Asteroid : NetworkBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            GameplayController.Instance.AsteroidDestroyed(this, collision.gameObject.GetComponent<Bullet>().PlayerShooter);
+           // GameplayController.Instance.AsteroidDestroyed(this, collision.gameObject.GetComponent<ClasicBullet>().PlayerShooter);
             if (!isServer)
                 return;
 
@@ -119,7 +119,7 @@ public class Asteroid : NetworkBehaviour
             // Destroy the current asteroid since it is either replaced by two
             // new asteroids or small enough to be destroyed by the bullet
 
-            AsteroidSpawner.Instance.AddToPool(this);
+           // AsteroidSpawner.Instance.AddToPool(this);
 
         }
     }
@@ -131,13 +131,12 @@ public class Asteroid : NetworkBehaviour
         Vector2 position = transform.position;
         position += Random.insideUnitCircle * 0.5f;
 
-        AsteroidSpawner.Instance.SpawnNewAsteriods(size, position, transform.rotation);
+        //AsteroidSpawner.Instance.SpawnNewAsteriods(size, position, transform.rotation);
     }
     [ClientRpc]
     public void ShowExplosive()
     {
-        GameplayController.Instance.ExplosionEffect.transform.position = transform.position;
-        GameplayController.Instance.ExplosionEffect.Play();
+        VfxController.Instance?.Explote(transform.position);
     }
 
     [ClientRpc]

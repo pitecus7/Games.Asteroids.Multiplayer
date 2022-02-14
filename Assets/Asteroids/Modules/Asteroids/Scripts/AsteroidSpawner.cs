@@ -5,23 +5,48 @@ using UnityEngine;
 public class AsteroidSpawner : NetworkBehaviour
 {
     public static AsteroidSpawner Instance;
-    public Asteroid asteroidPrefab;
-    public float spawnDistance = 12f;
-    public float spawnRate = 3f;
-    public int amountPerSpawn = 1;
+    [SerializeField] private GenericFactory factory;
 
-    public float timeToAddDificulty = 30;//Seconds
+    [SerializeField] private GameDataChannel gameDataChannel;
+    [SerializeField] private ProjectSettingsSO projectSettings;
+
+    [SerializeField] private float spawnDistance = 12f;
+    [SerializeField] private float spawnRate = 3f;
+    [SerializeField] private int amountPerSpawn = 1;
+
+    [SerializeField] private float timeToAddDificulty = 30;//Seconds
 
     [Range(0f, 45f)]
-    public float trajectoryVariance = 15f;
-
-    Queue<Asteroid> asteroidsPool = new Queue<Asteroid>();
+    [SerializeField] private float trajectoryVariance = 15f;
 
     [SerializeField] private int difficulty = 0;
 
     private void Awake()
     {
         Instance = this;
+
+        gameDataChannel.OnAsteroidDestroyed += AsteroidDestroyed;
+        if (factory == null)
+        {
+            factory = GenericFactory.Instance;
+        }
+    }
+
+    private void AsteroidDestroyed(AsteroidEntity asteroid, SpaceshipEntity destroyer)
+    {
+        AsteroidSO asteroidData = projectSettings.projectObjects.Find(projectObject => projectObject.objectId == asteroid.Id) as AsteroidSO;
+
+        for (int i = 0; i < asteroidData.dividePartsNumber; i++)
+        {
+            Vector2 position = asteroid.transform.position;
+            position += Random.insideUnitCircle * 0.5f;
+
+            AsteroidEntity newAsteroid = factory.Create<AsteroidEntity>(asteroidData.divideObject.objectId);
+
+            newAsteroid.gameObject.transform.position = position;
+
+            newAsteroid.Init(Random.insideUnitCircle.normalized);
+        }
     }
 
     public override void OnStopServer()
@@ -33,18 +58,23 @@ public class AsteroidSpawner : NetworkBehaviour
 
     public void Init()
     {
-      /*  InvokeRepeating(nameof(MoreDificulty), timeToAddDificulty, timeToAddDificulty);
+        InvokeRepeating(nameof(MoreDificulty), timeToAddDificulty, timeToAddDificulty);
         if (isServer)
         {
             MoreDificulty();
-        }*/
+        }
+    }
+
+    public void Stop()
+    {
+        CancelInvoke();
     }
 
     public void MoreDificulty()
     {
-      /*  difficulty++;
+        difficulty++;
         CancelInvoke(nameof(Spawn));
-        InvokeRepeating(nameof(Spawn), spawnRate / difficulty, spawnRate / difficulty);*/
+        InvokeRepeating(nameof(Spawn), spawnRate / difficulty, spawnRate / difficulty);
     }
 
     public void Spawn()
@@ -67,52 +97,13 @@ public class AsteroidSpawner : NetworkBehaviour
 
             // Create the new asteroid by cloning the prefab and set a random
             // size within the range
-            Asteroid asteroid = GetPooledObject(spawnPoint, rotation);
-            
-
-            asteroid.SetValues();
-            // Set the trajectory to move in the direction of the spawner
-            Vector2 trajectory = rotation * -spawnDirection;
-            asteroid.SetTrajectory(trajectory);
-        }
-    }
-    [ServerCallback]
-    public void SpawnNewAsteriods(float currentSize, Vector2 position, Quaternion rotation)
-    {
-
-        // Create the new asteroid at half the size of the current
-        Asteroid half = GetPooledObject(position, rotation);
-
-        // Set a random trajectory
-        half.SetTrajectory(Random.insideUnitCircle.normalized);
-
-        half.SetValues(currentSize * 0.5f);
-    }
-
-    public Asteroid GetPooledObject(Vector2 position, Quaternion rotation)
-    {
-        if (asteroidsPool.Count > 0)
-        {
-            Asteroid asteroid = asteroidsPool.Dequeue();
-            asteroid.ShowToClients(position);
-            asteroid.gameObject.transform.position = position;
+            AsteroidEntity asteroid = factory.Create<AsteroidEntity>("BigAsteroid");
+            asteroid.gameObject.transform.position = spawnPoint;
             asteroid.gameObject.transform.rotation = rotation;
-            asteroid.gameObject.SetActive(true);
-            return asteroid;
-        }
-        else
-        {
-            Asteroid asteroid = Instantiate(asteroidPrefab, position, rotation);
-            NetworkServer.Spawn(asteroid.gameObject);
-            return asteroid;
-        }
-    }
 
-    public void AddToPool(Asteroid asteroid)
-    {
-        asteroid.HideToClients();
-        asteroid.gameObject.SetActive(false);
-        asteroidsPool.Enqueue(asteroid);
+            Vector2 trajectory = rotation * -spawnDirection;
+            asteroid.Init(trajectory);
+        }
     }
 
     private void OnDestroy()

@@ -5,13 +5,13 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
-using UnityEditor;
+    using UnityEditor;
 
-#if UNITY_2021_2_OR_NEWER
+    #if UNITY_2021_2_OR_NEWER
         using UnityEditor.SceneManagement;
-#elif UNITY_2018_3_OR_NEWER
-using UnityEditor.Experimental.SceneManagement;
-#endif
+    #elif UNITY_2018_3_OR_NEWER
+        using UnityEditor.Experimental.SceneManagement;
+    #endif
 #endif
 
 namespace Mirror
@@ -318,12 +318,6 @@ namespace Mirror
                 component.netIdentity = this;
                 component.ComponentIndex = i;
             }
-        }
-
-        public void ArrayPush<T>(T[] table, object value)
-        {
-            Array.Resize(ref table, table.Length + 1); // Resizing the array for the cloned length (+-) (+1)
-            table.SetValue(value, table.Length - 1); // Setting the value for the new element
         }
 
         // Awake is only called in Play mode.

@@ -87,7 +87,7 @@ namespace Mirror
 
         void Update()
         {
-           /* if (Input.GetKeyDown(hotKey))
+            /*if (Input.GetKeyDown(hotKey))
                 visible = !visible;*/
         }
 

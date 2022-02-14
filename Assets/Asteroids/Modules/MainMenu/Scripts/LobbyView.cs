@@ -1,3 +1,4 @@
+using CentaurGames.Packages.Games.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,7 +56,8 @@ public class LobbyView : MonoBehaviour, ILobbyViewable
 
     private void GoToGameplay()
     {
-        SceneManager.LoadScene("Gameplay");
+        //SceneManager.LoadScene("Gameplay");
+        GameManager.Instance.FinishScene("Gameplay");
     }
 
     public void Init()

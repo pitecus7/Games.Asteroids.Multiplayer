@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Asteroid
   - Bullet
+  - Ufo
+  - UfoBullet
   layers:
   - Default
   - TransparentFX
@@ -16,8 +18,8 @@ TagManager:
   - Asteroid
   - Player
   - Bullet
-  - 
-  - 
+  - Ufo
+  - UfoBullet
   - 
   - 
   - 

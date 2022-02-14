@@ -5,10 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayersChannel", menuName = "ScriptableObjects/PlayersChannel", order = 1)]
 public class PlayersChannel : ScriptableObject
 {
-    public Action<Player> OnPlayerJoined;
+    public Action<IPlayerNetworkable> OnPlayerJoined;
 
-    public void AddPlayer(Player player)
+    public void AddPlayer(GameObject player)
     {
-        OnPlayerJoined?.Invoke(player);
+        if (player.TryGetComponent(out IPlayerNetworkable playerNetwork))
+        {
+            OnPlayerJoined?.Invoke(playerNetwork);
+        }
+        else
+        {
+            Debug.LogWarning("Trying to Add a player and it's not a player.");
+        }
     }
 }

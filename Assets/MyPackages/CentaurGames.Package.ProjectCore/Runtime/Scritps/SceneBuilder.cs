@@ -11,9 +11,21 @@ namespace CentaurGames.Packages.Games.Core
 
         private bool isTest;
 
+        [SerializeField] private bool reflection;
+
         public void Init(List<IInitializable> initilizables, bool mode)
         {
-            initilizables.ForEach(initializer => this.initilizables.Add(initializer.SceneName, initializer));
+            if (reflection)
+            {
+                initilizables.ForEach(initializer => this.initilizables.Add(initializer.SceneName, initializer));
+            }
+            else
+            {
+                for (int i = 0; i < GetComponents<IInitializable>().Length; i++)
+                {
+                    this.initilizables.Add(GetComponents<IInitializable>()[i].SceneName, GetComponents<IInitializable>()[i]);
+                }
+            }
 
             Mode(mode);
         }
