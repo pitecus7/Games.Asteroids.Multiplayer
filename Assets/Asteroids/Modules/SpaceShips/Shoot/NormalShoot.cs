@@ -11,6 +11,8 @@ public class NormalShoot : NetworkBehaviour, IShootAble
 
     private GenericFactory factory;
 
+    public GameObject Gameobject => gameObject;
+
     private void Awake()
     {
         factory = GenericFactory.Instance;

@@ -11,6 +11,12 @@ public class UfoNormalMovementBehaviour : NetworkBehaviour, IFlyAble
     [SerializeField] private float maxDistance = 5.0f;
     [SerializeField] private float turnRate = 5.0f;
 
+    public float Speed => speed;
+
+    public float SpeedRotation => 0;
+
+    public GameObject Gameobject => gameObject;
+
     private void Awake()
     {
         if (ufoEntity == null)
@@ -26,11 +32,27 @@ public class UfoNormalMovementBehaviour : NetworkBehaviour, IFlyAble
 
     public void UpdateBehaviour(float dt)
     {
-        spaceshipActor.transform.up = Vector2.Lerp(spaceshipActor.transform.up, (ufoEntity.Target.position - spaceshipActor.transform.position), turnRate);
-
-        if (Vector2.Distance(spaceshipActor.transform.position, ufoEntity.Target.position) > maxDistance)
+        if (!ufoEntity.Target.isInactive)
         {
-            spaceshipActor?.RigidBody.AddForce(transform.up * speed);
+            spaceshipActor.transform.up = Vector2.Lerp(spaceshipActor.transform.up, (ufoEntity.Target.transform.position - spaceshipActor.transform.position), turnRate);
+
+            if (Vector2.Distance(spaceshipActor.transform.position, ufoEntity.Target.transform.position) > maxDistance)
+            {
+                spaceshipActor?.RigidBody.AddForce(transform.up * speed);
+            }
         }
+        else
+        {
+            spaceshipActor?.RigidBody.AddForce(transform.up * speed * 2);
+        }
+    }
+
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
+
+    public void SetSpeedRotation(float newSpeed)
+    {
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - Ufo
   - UfoBullet
+  - PowerUP
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Bullet
   - Ufo
   - UfoBullet
-  - 
+  - PowerUp
   - 
   - 
   - 

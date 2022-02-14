@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0afbaa3fb8be3342b2d6f89adecff8f, type: 3}
+  m_Name: SpeedPowerUp
+  m_EditorClassIdentifier: 
+  objectId: Speed
+  prefab: {fileID: 1132063890046316133, guid: 8397e7fda1f59294b9de7daaf63f3a3e, type: 3}
+  duration: 10
+  increse: 2

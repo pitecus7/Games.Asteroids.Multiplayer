@@ -6,6 +6,8 @@ public class GameDataChannel : ScriptableObject
 {
     public Action<AsteroidEntity, SpaceshipEntity> OnAsteroidDestroyed;
     public Action<SpaceshipEntity, SpaceshipEntity> OnEnemyDestroyed;
+    public Action OnFinishMatch;
+
     public void AsteroidDestroy(AsteroidEntity asteroid, SpaceshipEntity destroyer)
     {
         OnAsteroidDestroyed?.Invoke(asteroid, destroyer);
@@ -14,5 +16,10 @@ public class GameDataChannel : ScriptableObject
     public void EnemyDestroy(SpaceshipEntity enemy, SpaceshipEntity destroyer)
     {
         OnEnemyDestroyed?.Invoke(enemy, destroyer);
+    }
+
+    public void FinishMatch()
+    {
+        OnFinishMatch?.Invoke();
     }
 }

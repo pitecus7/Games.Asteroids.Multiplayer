@@ -8,6 +8,11 @@ public class NormalMovement : NetworkBehaviour, IFlyAble
     [SerializeField] private SpaceshipActor spaceshipActor;
     [SerializeField] private float speed = 1.0f;
     [SerializeField] private float speedRotation = 5.0f;
+    public float Speed => speed;
+
+    public float SpeedRotation => speedRotation;
+
+    public GameObject Gameobject => gameObject;
 
     [SerializeField] private InputsReader inputsReader;
 
@@ -21,7 +26,12 @@ public class NormalMovement : NetworkBehaviour, IFlyAble
         if (inputsReader == null)
         {
             inputsReader = Resources.Load<InputsReader>("Common/ControlChannel");
-        }        
+        }
+    }
+
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
     }
 
     public void UpdateBehaviour(float dt)
@@ -41,5 +51,10 @@ public class NormalMovement : NetworkBehaviour, IFlyAble
         {
             spaceshipActor.RigidBody.AddTorque(inputsReader.GetTurnDirection() * speedRotation);
         }
+    }
+
+    public void SetSpeedRotation(float newSpeed)
+    {
+        speedRotation = newSpeed;
     }
 }

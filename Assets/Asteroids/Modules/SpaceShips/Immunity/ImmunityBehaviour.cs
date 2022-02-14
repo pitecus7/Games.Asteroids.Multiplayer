@@ -9,6 +9,8 @@ public class ImmunityBehaviour : NetworkBehaviour, IImmuneAble
     public Action OnStopImmune { get; set; }
     public Action<float> OnStartImmune { get; set; }
 
+    public GameObject Gameobject =>gameObject;
+
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     private float timeImmune;

@@ -10,10 +10,12 @@ public class UfoSpaceship : SpaceshipEntity
     [SerializeField]
     private IShootAble spaceshipShoot;
 
-    [SerializeField] private GameObject targetGameObject;
-    public Transform Target => targetGameObject.transform;
+    [SerializeField] private SpaceshipEntity target;
+    public SpaceshipEntity Target => target;
 
     [SerializeField] private List<SpaceshipEntity> targets;
+
+    bool targetLastState;
 
     [SerializeField]
     private void OnEnable()
@@ -24,8 +26,15 @@ public class UfoSpaceship : SpaceshipEntity
     private void SeletTarget()
     {
         targets.AddRange(FindObjectsOfType<PlayerSpaceship>());
+
+        targets = targets.FindAll(_target => _target.isInactive == false);
+
         int randomTarget = Random.Range(0, targets.Count);
-        targetGameObject = targets[randomTarget].GameObject;
+
+        if (targets.Count > 0)
+            target = targets[randomTarget];
+
+        targetLastState = target.isInactive;
     }
 
     private void Awake()
@@ -39,14 +48,19 @@ public class UfoSpaceship : SpaceshipEntity
             spaceshipShoot = GetComponentInChildren<IShootAble>();
         }
     }
-
+    [Server]
     public override void Init()
     {
+        ShowToClients(transform.position);
     }
 
     [Server]
     private void FixedUpdate()
     {
+        if (targetLastState != target.isInactive)
+        {
+            SeletTarget();
+        }
         spaceshipMovement?.UpdateBehaviour(Time.deltaTime);
         spaceshipShoot?.UpdateBehaviour(Time.deltaTime);
     }
@@ -63,6 +77,13 @@ public class UfoSpaceship : SpaceshipEntity
         VfxController.Instance?.Explote(transform.position);
     }
 
+    [ClientRpc]
+    public void ShowToClients(Vector2 position)
+    {
+        gameObject.transform.position = position;
+        gameObject.SetActive(true);
+    }
+
     [Server]
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -73,7 +94,7 @@ public class UfoSpaceship : SpaceshipEntity
         BulletEntity bullet;
 
         if (collision.gameObject.TryGetComponent(out bullet) && bullet.Shooter.TryGetComponent(out shooter))
-            gameDataChannel.EnemyDestroy(this, shooter);    
+            gameDataChannel.EnemyDestroy(this, shooter);
         else if (collision.gameObject.TryGetComponent(out shooter))
             gameDataChannel.EnemyDestroy(this, shooter);
 

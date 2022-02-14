@@ -77,7 +77,27 @@ public class ClassicMultiplayerGameplayController : GameplayControllerCore
 
             if (deadPlayersCount >= players.Count)
             {
+                asteroidSpawner.Stop();
+                enemySpawner.Stop();
+
+                List<PlayerScore> scores = new List<PlayerScore>();
+                string winnerNickname = "";
+                int scoreMax = 0;
+
+                players.ForEach(player =>
+                {
+                    PlayerScore playerScore = player.GameObject.GetComponentInChildren<PlayerScore>();
+                    if (playerScore != null && playerScore.Score >= scoreMax)
+                    {
+                        scoreMax = playerScore.Score;
+                        winnerNickname = player.Nickname;
+                    }
+
+                    //TODO: Send information to clients
+                    //players.ForEach(player => player.FinishMatch(winnerNickname, scoreMax.ToString("0000000")));
+                });
             }
+
         }
         else
         {
@@ -110,57 +130,9 @@ public class ClassicMultiplayerGameplayController : GameplayControllerCore
         {
             asteroidSpawner.Init();
             enemySpawner.Init();
-            Invoke(nameof(SpawnUfo), 2);
         }
 
         players.ForEach(player => player?.Init());
-    }
-
-    private void SpawnUfo()
-    {
-        //GenericFactory.Instance.Create();
-    }
-
-    private void OnPlayerCrash(GameObject playerGO)
-    {
-        Player player = playerGO.GetComponent<Player>();
-
-
-        player.RemoveLive(1);
-
-        if (player.Lives <= 0)
-        {
-            /*if (settingChannel.gameType == GameType.Solo)
-            {
-                gameOverPanel.ShowSoloPanel(player.Score.ToString("0000000"));
-            }
-            else
-            {
-                playerDead++;
-
-                if (playerDead >= players.Count)
-                {
-                    string winnerNickname = "";
-                    int scoreMax = 0;
-                    players.ForEach(player =>
-                    {
-                        /*if (player.Score >= scoreMax)
-                        {
-                            scoreMax = player.Score;
-                            winnerNickname = player.Nickname;
-
-                        }*/
-            // });
-            //players.ForEach(player => player.FinishMatch(winnerNickname, scoreMax.ToString("0000000")));
-            // }
-            // }
-        }
-        else
-        {
-            // StartCoroutine(Respawn(player));
-        }
-
-        player.HidePlayer();
     }
 
     private IEnumerator Respawn(IPlayerNetworkable player)

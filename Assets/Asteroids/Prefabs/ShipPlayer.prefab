@@ -403,7 +403,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  gameDataChannel: {fileID: 11400000, guid: 2e9409a9cab5f0e409100b9c37ffb67c, type: 2}
   id: 
+  isInactive: 1
   isImmune: 0
   playersChannel: {fileID: 11400000, guid: 006b0adee0c3fba428d922c7bd30d575, type: 2}
   playerNickname: {fileID: 5689501641926326201}
@@ -605,4 +607,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6167afe341002104bb86d65ff678fab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   spriteRenderer: {fileID: 1202323324300421004}

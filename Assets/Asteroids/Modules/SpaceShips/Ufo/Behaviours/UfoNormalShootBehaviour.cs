@@ -15,6 +15,7 @@ public class UfoNormalShootBehaviour : NetworkBehaviour, IShootAble
     private float currentTimeShoot;
 
     private GenericFactory factory;
+    public GameObject Gameobject => gameObject;
 
     private void Awake()
     {
@@ -33,7 +34,7 @@ public class UfoNormalShootBehaviour : NetworkBehaviour, IShootAble
 
     public void UpdateBehaviour(float dt)
     {
-        if (Vector2.Distance(spaceshipActor.transform.position, ufoEntity.Target.position) < distanceToShoot && currentTimeShoot >= fireCooldown)
+        if (!ufoEntity.Target.isInactive && Vector2.Distance(spaceshipActor.transform.position, ufoEntity.Target.transform.position) < distanceToShoot && currentTimeShoot >= fireCooldown)
         {
             Shoot();
             currentTimeShoot = 0;

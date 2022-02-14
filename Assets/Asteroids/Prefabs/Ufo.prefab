@@ -50,7 +50,7 @@ MonoBehaviour:
   spaceshipActor: {fileID: 2604305284862644135}
   ufoEntity: {fileID: 2604305284862644218}
   speed: 75
-  maxDistance: 7
+  maxDistance: 5
   turnRate: 5
 --- !u!114 &5913265644026787300
 MonoBehaviour:
@@ -140,7 +140,8 @@ MonoBehaviour:
   syncInterval: 0.1
   gameDataChannel: {fileID: 11400000, guid: 2e9409a9cab5f0e409100b9c37ffb67c, type: 2}
   id: Ufo
-  targetGameObject: {fileID: 0}
+  isInactive: 1
+  target: {fileID: 0}
   targets: []
 --- !u!114 &2604305284862644135
 MonoBehaviour:

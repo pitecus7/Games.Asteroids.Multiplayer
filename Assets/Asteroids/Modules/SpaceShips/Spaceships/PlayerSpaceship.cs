@@ -26,6 +26,8 @@ public class PlayerSpaceship : SpaceshipEntity, IPlayerNetworkable
 
     public bool IsLocal => isLocalPlayer;
 
+    public string Nickname => playerNickname.Nickname;
+
     private void Awake()
     {
         if (spaceshipMovement == null)
@@ -67,6 +69,7 @@ public class PlayerSpaceship : SpaceshipEntity, IPlayerNetworkable
 
     public override void Init()
     {
+        isInactive = false;
         playerNickname?.HideNickname();
     }
 
@@ -91,6 +94,7 @@ public class PlayerSpaceship : SpaceshipEntity, IPlayerNetworkable
     [ClientRpc]
     public void Respawn(Vector2 position)
     {
+        isInactive = false;
         spaceshipImmune.Immunity(3);
         transform.position = position;
         gameObject.SetActive(true);
@@ -109,6 +113,7 @@ public class PlayerSpaceship : SpaceshipEntity, IPlayerNetworkable
         {
             HidePlayer();
             ShowExplosive();
+            isInactive = true;
             OnColision?.Invoke(this, collision.gameObject);
         }
     }

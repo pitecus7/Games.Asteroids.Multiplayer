@@ -12,6 +12,7 @@ public class PlayerNickname : NetworkBehaviour
     [SerializeField] private bool hideText;
 
     [SyncVar(hook = nameof(NicknameChanged)), SerializeField] private string nickname;
+    public string Nickname => nickname;
 
     private float alphaCurrentValue;
 

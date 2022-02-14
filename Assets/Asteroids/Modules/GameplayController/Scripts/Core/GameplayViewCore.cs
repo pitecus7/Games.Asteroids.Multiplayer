@@ -5,5 +5,5 @@ using UnityEngine;
 public abstract class GameplayViewCore : MonoBehaviour
 {
     public abstract void StartMatch(object Data);
-    public abstract void FinishMatch(object Data);
+    public abstract void FinishMatch(object Data = null);
 }

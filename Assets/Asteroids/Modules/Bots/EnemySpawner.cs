@@ -1,5 +1,4 @@
 using Mirror;
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +8,7 @@ public class EnemySpawner : NetworkBehaviour
     public static EnemySpawner Instance;
 
     [SerializeField] private GenericFactory factory;
+    [SerializeField] private PowerUpsSpawner powerUpSpawner;
 
     [SerializeField] private GameDataChannel gameDataChannel;
 
@@ -27,13 +27,19 @@ public class EnemySpawner : NetworkBehaviour
     {
         Instance = this;
 
-        projectSettings.projectObjects.ForEach(projectObject =>
-        {
-            if (projectObject.GetType() == typeof(EnemySpaceshipSO))
+        if (projectSettings != null)
+            projectSettings.projectObjects.ForEach(projectObject =>
             {
-                enemyListId.Add(projectObject.objectId);
-            }
-        });
+                if (projectObject.GetType() == typeof(EnemySpaceshipSO))
+                {
+                    enemyListId.Add(projectObject.objectId);
+                }
+            });
+
+        if (powerUpSpawner == null)
+        {
+            powerUpSpawner = PowerUpsSpawner.Instance;
+        }
 
         gameDataChannel.OnEnemyDestroyed += EnemyDestroyed;
 
@@ -43,9 +49,9 @@ public class EnemySpawner : NetworkBehaviour
         }
     }
 
-    private void EnemyDestroyed(SpaceshipEntity arg1, SpaceshipEntity arg2)
+    private void EnemyDestroyed(SpaceshipEntity enemyDestroyed, SpaceshipEntity destroyer)
     {
-
+        powerUpSpawner?.SpawnRandom(enemyDestroyed.transform.position);
     }
 
     public void Spawn()
@@ -77,6 +83,7 @@ public class EnemySpawner : NetworkBehaviour
 
     public void Init()
     {
+        CancelInvoke();
         if (isServer)
         {
             InvokeRepeating(nameof(Spawn), spawnRate, spawnRate);

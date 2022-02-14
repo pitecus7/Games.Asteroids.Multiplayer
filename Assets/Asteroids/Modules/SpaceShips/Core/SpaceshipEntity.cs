@@ -19,6 +19,8 @@ public abstract class SpaceshipEntity :
     [SerializeField] private string id;
     public string Id => id;
 
+    public bool isInactive = true;
+
     public GameObject GameObject => gameObject;
 
     public abstract void Init();

@@ -9,6 +9,8 @@ public interface IPlayerNetworkable
 
     public int PlayerId { get; }
 
+    public string Nickname { get; }
+
     public GameObject GameObject { get; }
 
     public void Init();
