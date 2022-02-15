@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef7c57b16efaf6b488b93c621704d88e, type: 3}
+  m_Name: ArcBullet
+  m_EditorClassIdentifier: 
+  objectId: ArcBullet
+  prefab: {fileID: 8255245463515508328, guid: 811eb2469880a674c9ef668867c46282, type: 3}

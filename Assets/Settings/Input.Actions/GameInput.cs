@@ -111,6 +111,60 @@ public class @GameInput : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""39f285f8-8523-4502-a994-e1681f57d6a3"",
+            ""actions"": [
+                {
+                    ""name"": ""OpenMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5838f05-d56d-4586-869e-4ff535fea207"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4bbd1988-4d97-483b-97a0-557127aee2fd"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Cheats"",
+            ""id"": ""238879b5-063b-4927-9411-9396362af2fb"",
+            ""actions"": [
+                {
+                    ""name"": ""CreatePowerUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""b5b7129d-a62a-4d75-8f17-80d3bb8b567c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a13221e2-7e10-4542-a5b6-9d0bae579436"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CreatePowerUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -120,6 +174,12 @@ public class @GameInput : IInputActionCollection, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Thrusting = m_Player.FindAction("Thrusting", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
+        // Menu
+        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        m_Menu_OpenMenu = m_Menu.FindAction("OpenMenu", throwIfNotFound: true);
+        // Cheats
+        m_Cheats = asset.FindActionMap("Cheats", throwIfNotFound: true);
+        m_Cheats_CreatePowerUp = m_Cheats.FindAction("CreatePowerUp", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -214,10 +274,84 @@ public class @GameInput : IInputActionCollection, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Menu
+    private readonly InputActionMap m_Menu;
+    private IMenuActions m_MenuActionsCallbackInterface;
+    private readonly InputAction m_Menu_OpenMenu;
+    public struct MenuActions
+    {
+        private @GameInput m_Wrapper;
+        public MenuActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @OpenMenu => m_Wrapper.m_Menu_OpenMenu;
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterface != null)
+            {
+                @OpenMenu.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnOpenMenu;
+                @OpenMenu.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnOpenMenu;
+                @OpenMenu.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnOpenMenu;
+            }
+            m_Wrapper.m_MenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @OpenMenu.started += instance.OnOpenMenu;
+                @OpenMenu.performed += instance.OnOpenMenu;
+                @OpenMenu.canceled += instance.OnOpenMenu;
+            }
+        }
+    }
+    public MenuActions @Menu => new MenuActions(this);
+
+    // Cheats
+    private readonly InputActionMap m_Cheats;
+    private ICheatsActions m_CheatsActionsCallbackInterface;
+    private readonly InputAction m_Cheats_CreatePowerUp;
+    public struct CheatsActions
+    {
+        private @GameInput m_Wrapper;
+        public CheatsActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CreatePowerUp => m_Wrapper.m_Cheats_CreatePowerUp;
+        public InputActionMap Get() { return m_Wrapper.m_Cheats; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CheatsActions set) { return set.Get(); }
+        public void SetCallbacks(ICheatsActions instance)
+        {
+            if (m_Wrapper.m_CheatsActionsCallbackInterface != null)
+            {
+                @CreatePowerUp.started -= m_Wrapper.m_CheatsActionsCallbackInterface.OnCreatePowerUp;
+                @CreatePowerUp.performed -= m_Wrapper.m_CheatsActionsCallbackInterface.OnCreatePowerUp;
+                @CreatePowerUp.canceled -= m_Wrapper.m_CheatsActionsCallbackInterface.OnCreatePowerUp;
+            }
+            m_Wrapper.m_CheatsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @CreatePowerUp.started += instance.OnCreatePowerUp;
+                @CreatePowerUp.performed += instance.OnCreatePowerUp;
+                @CreatePowerUp.canceled += instance.OnCreatePowerUp;
+            }
+        }
+    }
+    public CheatsActions @Cheats => new CheatsActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnThrusting(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnOpenMenu(InputAction.CallbackContext context);
+    }
+    public interface ICheatsActions
+    {
+        void OnCreatePowerUp(InputAction.CallbackContext context);
     }
 }

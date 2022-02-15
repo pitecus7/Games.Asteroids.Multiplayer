@@ -406,6 +406,7 @@ MonoBehaviour:
   gameDataChannel: {fileID: 11400000, guid: 2e9409a9cab5f0e409100b9c37ffb67c, type: 2}
   id: 
   isInactive: 1
+  inputsReader: {fileID: 11400000, guid: 422780db0f61b704c9f1961c372721a8, type: 2}
   isImmune: 0
   playersChannel: {fileID: 11400000, guid: 006b0adee0c3fba428d922c7bd30d575, type: 2}
   playerNickname: {fileID: 5689501641926326201}
@@ -522,6 +523,7 @@ GameObject:
   - component: {fileID: 3761206447877616959}
   - component: {fileID: 9130564712642607940}
   - component: {fileID: 9045093459324572820}
+  - component: {fileID: 946267300220931629}
   - component: {fileID: 543506219939213055}
   - component: {fileID: 852601656403121476}
   m_Layer: 7
@@ -579,6 +581,25 @@ MonoBehaviour:
   syncInterval: 0.1
   inputsReader: {fileID: 11400000, guid: 422780db0f61b704c9f1961c372721a8, type: 2}
   fireCooldown: 0.1
+--- !u!114 &946267300220931629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8836252093595428836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20a9a21ff1b8e7142890b26e61d5f333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  inputsReader: {fileID: 11400000, guid: 422780db0f61b704c9f1961c372721a8, type: 2}
+  fireCooldown: 0.1
+  endAngle: 150
+  startAngle: 30
+  bulletsSpawn: 1
 --- !u!114 &543506219939213055
 MonoBehaviour:
   m_ObjectHideFlags: 0
