@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fee7a91ecff3304a8a25d1349e74186, type: 3}
+  m_Name: BigAsteroid
+  m_EditorClassIdentifier: Assembly-CSharp::AsteroidSO
+  objectId: BigAsteroid
+  prefab: {fileID: 3274712119533052531, guid: d34c4462f49e4f74cbdffbc3247fea67, type: 3}
+  dividePartsNumber: 2
+  scoreToAdd: 100
+  divideObject: {fileID: 11400000, guid: bc869a77372ef8e47950cd9bac70e7d0, type: 2}

@@ -1202,7 +1202,7 @@ namespace Mirror
         void OnClientDisconnectInternal()
         {
             OnClientDisconnectInternalEvent?.Invoke();
-            Debug.Log("NetworkManager.OnClientDisconnectInternal");
+            //Debug.Log("NetworkManager.OnClientDisconnectInternal");
 #pragma warning disable 618
             // obsolete method calls new method because it's not empty
             OnClientDisconnect(NetworkClient.connection);
@@ -1223,7 +1223,7 @@ namespace Mirror
 
         void OnClientSceneInternal(SceneMessage msg)
         {
-            Debug.Log("NetworkManager.OnClientSceneInternal");
+            //Debug.Log("NetworkManager.OnClientSceneInternal");
 
             // This needs to run for host client too. NetworkServer.active is checked there
             if (NetworkClient.isConnected)
@@ -1233,7 +1233,7 @@ namespace Mirror
         }
 
         /// <summary>Called on the server when a new client connects.</summary>
-        public virtual void OnServerConnect(NetworkConnection conn) { }
+        public virtual void OnServerConnect(NetworkConnection conn) {}
 
         /// <summary>Called on the server when a client disconnects.</summary>
         // Called by NetworkServer.OnTransportDisconnect!
@@ -1243,7 +1243,7 @@ namespace Mirror
             // can be overwritten for cases like delayed logouts in MMOs to
             // avoid players escaping from PvP situations by logging out.
             NetworkServer.DestroyPlayerForConnection(conn);
-            Debug.Log("OnServerDisconnect: Client disconnected.");
+            //Debug.Log("OnServerDisconnect: Client disconnected.");
         }
 
         /// <summary>Called on the server when a client is ready (= loaded the scene)</summary>
@@ -1273,13 +1273,13 @@ namespace Mirror
         }
 
         /// <summary>Called on server when transport raises an exception. NetworkConnection may be null.</summary>
-        public virtual void OnServerError(NetworkConnection conn, Exception exception) { }
+        public virtual void OnServerError(NetworkConnection conn, Exception exception) {}
 
         /// <summary>Called from ServerChangeScene immediately before SceneManager.LoadSceneAsync is executed</summary>
-        public virtual void OnServerChangeScene(string newSceneName) { }
+        public virtual void OnServerChangeScene(string newSceneName) {}
 
         /// <summary>Called on server after a scene load with ServerChangeScene() is completed.</summary>
-        public virtual void OnServerSceneChanged(string sceneName) { }
+        public virtual void OnServerSceneChanged(string sceneName) {}
 
         /// <summary>Called on the client when connected to a server. By default it sets client as ready and adds a player.</summary>
         public virtual void OnClientConnect()
@@ -1317,21 +1317,18 @@ namespace Mirror
         public virtual void OnClientDisconnect(NetworkConnection conn) => OnClientDisconnect();
 
         /// <summary>Called on client when transport raises an exception.</summary>
-        public virtual void OnClientError(Exception exception)
-        {
-            Debug.Log("Error");
-        }
+        public virtual void OnClientError(Exception exception) {}
 
         /// <summary>Called on clients when a servers tells the client it is no longer ready, e.g. when switching scenes.</summary>
-        public virtual void OnClientNotReady() { }
+        public virtual void OnClientNotReady() {}
 
         // Deprecated 2021-12-11
         [Obsolete("Remove the NetworkConnection parameter in your override and use NetworkClient.connection instead.")]
-        public virtual void OnClientNotReady(NetworkConnection conn) { }
+        public virtual void OnClientNotReady(NetworkConnection conn) {}
 
         /// <summary>Called from ClientChangeScene immediately before SceneManager.LoadSceneAsync is executed</summary>
         // customHandling: indicates if scene loading will be handled through overrides
-        public virtual void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling) { }
+        public virtual void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling) {}
 
         /// <summary>Called on clients when a scene has completed loaded, when the scene load was initiated by the server.</summary>
         // Scene changes can cause player objects to be destroyed. The default
@@ -1360,21 +1357,21 @@ namespace Mirror
         // from all versions, so users only need to implement this one case.
 
         /// <summary>This is invoked when a host is started.</summary>
-        public virtual void OnStartHost() { }
+        public virtual void OnStartHost() {}
 
         /// <summary>This is invoked when a server is started - including when a host is started.</summary>
-        public virtual void OnStartServer() { }
+        public virtual void OnStartServer() {}
 
         /// <summary>This is invoked when the client is started.</summary>
-        public virtual void OnStartClient() { }
+        public virtual void OnStartClient() {}
 
         /// <summary>This is called when a server is stopped - including when a host is stopped.</summary>
-        public virtual void OnStopServer() { }
+        public virtual void OnStopServer() {}
 
         /// <summary>This is called when a client is stopped.</summary>
-        public virtual void OnStopClient() { }
+        public virtual void OnStopClient() {}
 
         /// <summary>This is called when a host is stopped.</summary>
-        public virtual void OnStopHost() { }
+        public virtual void OnStopHost() {}
     }
 }

@@ -297,9 +297,17 @@ namespace Mirror
         // BUT internal so tests can add them after creating the NetworkIdentity
         internal void InitializeNetworkBehaviours()
         {
+            List<NetworkBehaviour> networkBehaviourComponents = new List<NetworkBehaviour>();
+
+            networkBehaviourComponents.AddRange(GetComponents<NetworkBehaviour>());
+            networkBehaviourComponents.AddRange(GetComponentsInChildren<NetworkBehaviour>());
+
             // Get all NetworkBehaviours
             // (never null. GetComponents returns [] if none found)
-            NetworkBehaviours = GetComponents<NetworkBehaviour>();
+
+            NetworkBehaviours = networkBehaviourComponents.ToArray();
+
+
             if (NetworkBehaviours.Length > byte.MaxValue)
                 Debug.LogError($"Only {byte.MaxValue} NetworkBehaviour components are allowed for NetworkIdentity: {name} because we send the index as byte.", this);
 
